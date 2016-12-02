@@ -26,15 +26,14 @@ namespace hammer_backstock
                 if (File.Exists("GameConfig.txt")) File.Copy("GameConfig.txt", "GameConfig_original.txt", true);
                 if (File.Exists("GameConfig_backstock.txt")) File.Copy("GameConfig_backstock.txt", "GameConfig.txt", true);
 
-                //Start hammer
-                var ccTagIntermediateCompilerProcess = new Process();
-                ccTagIntermediateCompilerProcess.StartInfo.FileName = "hammer.exe";
-                ccTagIntermediateCompilerProcess.StartInfo.Arguments = "-nop4";
-                ccTagIntermediateCompilerProcess.Start();
-                ccTagIntermediateCompilerProcess.WaitForExit();
+                // Start hammer
+                var hammer = new Process();
+                hammer.StartInfo.FileName = "hammer.exe";
+                hammer.StartInfo.Arguments = "-nop4";
+                hammer.Start();
+                hammer.WaitForExit();
 
                 // Restore original configurations
-
                 if (File.Exists("CmdSeq.wc")) File.Copy("CmdSeq.wc", "CmdSeq_backstock.wc", true);
                 if (File.Exists("CmdSeq_original.wc"))
                 {
@@ -51,8 +50,7 @@ namespace hammer_backstock
             }
             catch (Exception ex)
             {
-                File.AppendAllText("hammer_backstock_exceptions.txt", ex.ToString() + Environment.NewLine + Environment.NewLine + 
-                    "================================================================================================================================");
+                File.AppendAllText("hammer_backstock_exceptions.txt", ex.ToString() + Environment.NewLine + Environment.NewLine + new string('=', 128));
             }
         }
     }
